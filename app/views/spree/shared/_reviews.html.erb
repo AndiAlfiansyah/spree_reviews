@@ -16,11 +16,11 @@
     <div class="col-md-12">
       <div class="card">
         <ul class="nav nav-tabs" role="tablist">
-          <li role="comment" class="active"><a href="#givecomment" aria-controls="givecomment" role="tab" data-toggle="tab">Beri Ulasan</a></li>
-          <li role="comment"><a href="#comment" aria-controls="comment" role="tab" data-toggle="tab">Komentar (<%= Spree::Review.where({product_id: @product.id, approved: true}).count %>)</a></li>
+          <li role="comment" class="active"><a href="#comment" aria-controls="comment" role="tab" data-toggle="tab">Komentar (<%= Spree::Review.where({product_id: @product.id, approved: true}).count %>)</a></li>
+          <li role="comment"><a href="#givecomment" aria-controls="givecomment" role="tab" data-toggle="tab">Beri Ulasan</a></li>
         </ul>
         <div class="tab-content">
-          <div role="tabpanel" class="tab-pane active" id="givecomment">
+          <div role="tabpanel" class="tab-pane" id="givecomment">
             <h1>Ulasan</h1>
             <% if spree_user_signed_in? %>
               <%= form_for Spree::Review.new(product: @product), url: product_reviews_path(@product), html: { method: :post } do |f| %>
@@ -62,7 +62,7 @@
               <h4>Anda harus <a href="/login" class="text-info">login</a> untuk mengisi ulasan.</h4>
             <% end %>
           </div>
-          <div role="tabpanel" class="tab-pane" id="comment">
+          <div role="tabpanel" class="tab-pane active" id="comment">
             <% if Spree::Reviews::Config[:include_unapproved_reviews] == false and @product.reviews.approved.count == 0 %>
               <h5><%= Spree.t(:no_reviews_available) %></h5>
             <% else %>
