@@ -17,45 +17,49 @@
       <div class="card">
         <ul class="nav nav-tabs" role="tablist">
           <li role="comment" class="active"><a href="#givecomment" aria-controls="givecomment" role="tab" data-toggle="tab">Beri Ulasan</a></li>
-          <li role="comment"><a href="#comment" aria-controls="comment" role="tab" data-toggle="tab">Komentar (<%= Spree::Review.count %>)</a></li>
+          <li role="comment"><a href="#comment" aria-controls="comment" role="tab" data-toggle="tab">Komentar (<%= Spree::Review.where({product_id: @product.id, approved: true}).count %>)</a></li>
         </ul>
         <div class="tab-content">
           <div role="tabpanel" class="tab-pane active" id="givecomment">
-            <%= form_for Spree::Review.new(product: @product), url: product_reviews_path(@product), html: { method: :post } do |f| %>
-              <h1>Ulasan</h1>
-              <!-- name -->
-              <div class="form-group">
-                <!-- <input type="text" class="form-control" id="fullname" required> -->
-                <%= f.text_field :name, maxlength: 255, size: 50, class: 'form-control' %>
-                <span class="form-highlight"></span>
-                <span class="form-bar"></span>
-                <%= f.label :name, class: "desc-form" %>
-              </div>
-              <!-- title -->
-              <div class="form-group">
-                <%= f.text_field :title, maxlength: 255, size: 50, class: 'form-control' %>
-                <span class="form-highlight"></span>
-                <span class="form-bar"></span>
-                <%= f.label :title, class: "desc-form" %>
-              </div>
-              <!-- review -->
-              <div class="form-group">
-                <%= f.text_area :review, wrap: 'virtual', rows: 10, class: 'form-control' %>
-                <span class="form-highlight"></span>
-                <span class="form-bar"></span>
-                <%= f.label :review, class: "desc-form" %>
-              </div>
-              <!-- rating -->
-              <div class="radio-stars">
-                <input class="sr-star" id="radio-5" name="review[rating]" type="radio" value="5 stars" /><label class="radio-star" for="radio-5">5</label>
-                <input class="sr-star" id="radio-4" name="review[rating]" type="radio" value="4 stars" /><label class="radio-star" for="radio-4">4</label>
-                <input class="sr-star" id="radio-3" name="review[rating]" type="radio" value="3 stars" /><label class="radio-star" for="radio-3">3</label>
-                <input class="sr-star" id="radio-2" name="review[rating]" type="radio" value="2 stars" /><label class="radio-star" for="radio-2">2</label>
-                <input class="sr-star" id="radio-1" name="review[rating]" type="radio" value="1 stars" /><label class="radio-star" for="radio-1">1</label>
-                <span class="radio-star-total"></span>
-              </div>
-              <br>
-              <button type="submit" class="btn ripple-effect btn-info btn-order">Beri Ulasan</button>
+            <h1>Ulasan</h1>
+            <% if spree_user_signed_in? %>
+              <%= form_for Spree::Review.new(product: @product), url: product_reviews_path(@product), html: { method: :post } do |f| %>
+                <!-- name -->
+                <div class="form-group">
+                  <!-- <input type="text" class="form-control" id="fullname" required> -->
+                  <%= f.text_field :name, maxlength: 255, size: 50, class: 'form-control', required: true %>
+                  <span class="form-highlight"></span>
+                  <span class="form-bar"></span>
+                  <%= f.label :name, class: "desc-form" %>
+                </div>
+                <!-- title -->
+                <div class="form-group">
+                  <%= f.text_field :title, maxlength: 255, size: 50, class: 'form-control', required: true %>
+                  <span class="form-highlight"></span>
+                  <span class="form-bar"></span>
+                  <%= f.label :title, class: "desc-form" %>
+                </div>
+                <!-- review -->
+                <div class="form-group">
+                  <%= f.text_area :review, wrap: 'virtual', rows: 10, class: 'form-control', required: true %>
+                  <span class="form-highlight"></span>
+                  <span class="form-bar"></span>
+                  <%= f.label :review, class: "desc-form" %>
+                </div>
+                <!-- rating -->
+                <div class="radio-stars">
+                  <input class="sr-star" id="radio-5" name="review[rating]" type="radio" value="5 stars" /><label class="radio-star" for="radio-5">5</label>
+                  <input class="sr-star" id="radio-4" name="review[rating]" type="radio" value="4 stars" /><label class="radio-star" for="radio-4">4</label>
+                  <input class="sr-star" id="radio-3" name="review[rating]" type="radio" value="3 stars" /><label class="radio-star" for="radio-3">3</label>
+                  <input class="sr-star" id="radio-2" name="review[rating]" type="radio" value="2 stars" /><label class="radio-star" for="radio-2">2</label>
+                  <input class="sr-star" id="radio-1" name="review[rating]" type="radio" value="1 stars" /><label class="radio-star" for="radio-1">1</label>
+                  <!-- <span class="radio-star-total"></span> -->
+                </div>
+                <br>
+                <button type="submit" class="btn ripple-effect btn-info btn-order">Beri Ulasan</button>
+              <% end %>
+            <% else %>
+              <h4>Anda harus <a href="/login" class="text-info">login</a> untuk mengisi ulasan.</h4>
             <% end %>
           </div>
           <div role="tabpanel" class="tab-pane" id="comment">
@@ -63,7 +67,7 @@
               <h5><%= Spree.t(:no_reviews_available) %></h5>
             <% else %>
               <h1>Komentar</h1>
-              <h4><%= Spree::Review.count %> Komentar</h4>
+              <h4><%= Spree::Review.where({product_id: @product.id, approved: true}).count %> Komentar</h4>
               <% for review in (Spree::Reviews::Config[:track_locale] ? @product.reviews.localized(I18n.locale) : @product.reviews).default_approval_filter.preview %>
                 <section id="app" class="comments">
                   <article>
