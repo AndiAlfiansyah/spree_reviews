@@ -71,7 +71,8 @@
               <% for review in (Spree::Reviews::Config[:track_locale] ? @product.reviews.localized(I18n.locale) : @product.reviews).default_approval_filter.preview %>
                 <section id="app" class="comments">
                   <article>
-                    <img id="profile-photo" src="https://en.gravatar.com/userimage/18343163/3fd908393aedf6423ec12cacec9a1f50.jpg?size=200" />
+                    <% image = review.user.image_file_name %>
+                    <%= image_tag(image) %>
                     <h4><a href="#"><%= review.name %></a></h4>
                     <time><%= time_ago_in_words(review.created_at) %></time>
                     <like></like>
