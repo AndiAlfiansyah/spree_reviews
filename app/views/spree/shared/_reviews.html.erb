@@ -73,10 +73,9 @@
                   <article>
                     <% image = review.user.image_file_name %>
                     <%= image_tag(image) %>
-                    <h4><a href="#"><%= review.name %></a></h4>
+                    <h4><b><%= review.name %></b></h4>
                     <time><%= time_ago_in_words(review.created_at) %></time>
-                    <like></like>
-                    <p><%= simple_format(review.review) %></p>
+                    <p style="margin-top: -45px;"><%= simple_format(review.review) %></p>
                   </article>
                 </section>
               <% end %>
