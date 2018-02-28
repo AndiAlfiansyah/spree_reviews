@@ -48,7 +48,7 @@
                 </div>
                 <!-- rating -->
                 <div class="radio-stars">
-                  <input class="sr-star" id="radio-5" name="review[rating]" type="radio" value="5 stars" /><label class="radio-star" for="radio-5">5</label>
+                  <input class="sr-star" id="radio-5" name="review[rating]" type="radio" value="5 stars" required="true" /><label class="radio-star" for="radio-5">5</label>
                   <input class="sr-star" id="radio-4" name="review[rating]" type="radio" value="4 stars" /><label class="radio-star" for="radio-4">4</label>
                   <input class="sr-star" id="radio-3" name="review[rating]" type="radio" value="3 stars" /><label class="radio-star" for="radio-3">3</label>
                   <input class="sr-star" id="radio-2" name="review[rating]" type="radio" value="2 stars" /><label class="radio-star" for="radio-2">2</label>
@@ -72,7 +72,7 @@
                 <section id="app" class="comments">
                   <article>
                     <% image = review.user.image_file_name %>
-                    <%= image_tag(image) %>
+                    <%= image_tag(review.user.image.url) %>
                     <h4><b><%= review.name %></b></h4>
                     <time><%= time_ago_in_words(review.created_at) %></time>
                     <p style="margin-top: -45px;"><%= simple_format(review.review) %></p>
