@@ -64,7 +64,7 @@
           </div>
           <div role="tabpanel" class="tab-pane active" id="comment">
             <% if Spree::Reviews::Config[:include_unapproved_reviews] == false and @product.reviews.approved.count == 0 %>
-              <h5><%= Spree.t(:no_reviews_available) %></h5>
+              <h5>Belum ada ulasan.</h5>
             <% else %>
               <h1>Komentar</h1>
               <h4><%= Spree::Review.where({product_id: @product.id, approved: true}).count %> Komentar</h4>
