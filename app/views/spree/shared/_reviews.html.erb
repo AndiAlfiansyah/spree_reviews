@@ -27,21 +27,21 @@
                 <!-- name -->
                 <div class="form-group">
                   <!-- <input type="text" class="form-control" id="fullname" required> -->
-                  <%= f.text_field :name, maxlength: 255, size: 50, class: 'form-control', required: true %>
+                  <%= f.text_field :name, maxlength: 255, size: 50, class: 'form-control', required: true, oninvalid: "this.setCustomValidity('Kolom ini tidak boleh kosong')", oninput: "setCustomValidity('')" %>
                   <span class="form-highlight"></span>
                   <span class="form-bar"></span>
                   <%= f.label :name, class: "desc-form" %>
                 </div>
                 <!-- title -->
                 <div class="form-group">
-                  <%= f.text_field :title, maxlength: 255, size: 50, class: 'form-control', required: true %>
+                  <%= f.text_field :title, maxlength: 255, size: 50, class: 'form-control', required: true, oninvalid: "this.setCustomValidity('Kolom ini tidak boleh kosong')", oninput: "setCustomValidity('')" %>
                   <span class="form-highlight"></span>
                   <span class="form-bar"></span>
                   <%= f.label :title, class: "desc-form" %>
                 </div>
                 <!-- review -->
                 <div class="form-group">
-                  <%= f.text_area :review, wrap: 'virtual', rows: 10, class: 'form-control', required: true %>
+                  <%= f.text_area :review, wrap: 'virtual', rows: 10, class: 'form-control', required: true, oninvalid: "this.setCustomValidity('Kolom ini tidak boleh kosong')", oninput: "setCustomValidity('')" %>
                   <span class="form-highlight"></span>
                   <span class="form-bar"></span>
                   <%= f.label :review, class: "desc-form" %>
