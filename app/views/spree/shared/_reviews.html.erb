@@ -71,8 +71,12 @@
               <% for review in (Spree::Reviews::Config[:track_locale] ? @product.reviews.localized(I18n.locale) : @product.reviews).default_approval_filter.preview %>
                 <section id="app" class="comments">
                   <article>
-                    <% image = review.user.image_file_name %>
-                    <%= image_tag(review.user.image.url) %>
+                    <% if review.user.image.present? %>
+                      <% image = review.user.image_file_name %>
+                      <%= image_tag(review.user.image.url) %>
+                    <% else %>
+                      <%= image_tag "user-no-image.png" %>
+                    <% end %>
                     <h4><b><%= review.name %></b></h4>
                     <time><%= time_ago_in_words(review.created_at) %></time>
                     <p style="margin-top: -45px;"><%= simple_format(review.review) %></p>
